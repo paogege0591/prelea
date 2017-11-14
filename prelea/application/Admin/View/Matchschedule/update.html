@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>录入赛果</title>
+</head>
+<body>
+	<!-- 赛果录入页面 -->
+	
+	<form action="__APP__/Matchschedule/update.html" method="post">
+		<table border="1px" cellspacing="0" align="center">
+			<tr>
+				<td colspan="2" align="center" style="width:100px">主队</td>
+				<td colspan="2" align="center" style="width:100px">客队</td>
+			</tr>
+			<foreach name="rst" item="v" key="k">
+			<tr>
+				<td>{$v.aname}</td>
+				<td><input type="text" name="htg" value="{$v.hteamgoals}" style="width:15px"/>:</td>
+				<td><input type="text" name="vtg" value="{$v.vteamgoals}" style="width:15px"/></td>
+				<td>{$v.bname}</td>
+			</tr>
+			<input type="hidden" name="matchId" value="{$v[matchId]}"/>
+			</foreach>
+			<tr><td colspan="4"><input type="submit"/></td></tr>
+		</table>
+	</form>
+</body>
+</html>

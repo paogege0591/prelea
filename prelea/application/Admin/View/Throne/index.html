@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script src="__ROOT__/library/jquery/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+	$(function(){
+		/* 按钮点击事件 提升或降低权限 */
+		$('[name=btn1]').click(function(){
+			if(this.attributes['level'].nodeValue==100){
+				alert('权限已达最高，无法提升！');
+			}else{
+				location.href="__APP__/Throne/changelevel/cc/1/id/"+this.id+"/level/"+this.attributes["level"].nodeValue;
+			}
+		})
+		
+		$('[name=btn2]').click(function(){
+			if(this.attributes['level'].nodeValue==1){
+				if(confirm("权限降为0后无法再次提升，确定要降低此管理员权限吗？")){
+					location.href="__APP__/Throne/changelevel/cc/2/id/"+this.id+"/level/"+this.attributes["level"].nodeValue;	
+				}else
+				{
+					return false;
+				}
+			}else{
+				location.href="__APP__/Throne/changelevel/cc/2/id/"+this.id+"/level/"+this.attributes["level"].nodeValue;
+			}
+		})
+	})
+</script>
+<title>权限页面主页</title>
+</head>
+<body>
+	<table border="1" cellspacing="0" align="center">
+		<tr>
+			<th>用户名</th>
+			<th>等级</th>
+			<th>权限</th>
+			<th>管理</th>
+		</tr>
+		<foreach name="managers" item="v" key="k">
+			<tr>
+				<td>{$v.mansname}</td>
+				<td>{$v.level}</td>
+				<td>
+					<!-- 根据管理员等级值显示其所拥有的权限 -->
+					<if condition="$v[level] gt 0">
+						新闻增删改
+						<if condition="$v[level] egt 10">
+							,&nbsp;注册用户封禁/解封/清零
+							<if condition="$v[level] eq 100">
+								,&nbsp;更改其他管理员等级
+							</if>
+						</if> 
+						<else/>
+						无权限
+					</if>
+				</td>
+				<td>
+					<!-- 登录用户权限不足时将不予显示权限按钮 -->
+					<if condition="$_SESSION['mansMsg']['level'] lt 100">
+						您没有权限
+						<else/>
+						<input type="button" name="btn1" id="{$v[id]}" level="{$v[level]}" value="提升权限" /> /
+						<input type="button" name="btn2" id="{$v[id]}" level="{$v[level]}" value="降低权限" />
+					</if>
+				</td>
+			</tr>		
+		</foreach>
+	</table>
+</body>
+</html>

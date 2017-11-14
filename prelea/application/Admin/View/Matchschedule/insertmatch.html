@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="__ROOT__/public/css/reset.css"/>
+<link rel="stylesheet" type="text/css" href="__ROOT__/public/css/common.css"/>
+<script src="__ROOT__/library/jquery/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+	
+</script>
+<title>添加赛程</title>
+</head>
+<body>
+	<!-- 按比赛轮次添加赛程，每次需将每轮比赛全部录入方可提交 -->
+	<form action="#" method="post">
+		<label>比赛轮次:</label>
+		第<select name="roundnum">
+			<for start="1" end="41">
+				<option value="{$i}">{$i}</option>
+			</for>
+		</select>轮
+		<br /><br />
+		<for start="1" end="11" name="j">
+			<label>主队：</label>
+			<!-- 比赛队伍选择 -->
+			<select name="hteamId[]">
+				<foreach name="teams" item="v" key="k">
+					<option value={$v.teamId}>{$v.teamNameCn}</option>
+				</foreach>
+			</select>
+			&nbsp;&nbsp;
+			<label>客队：</label>
+			<select name="vteamId[]">
+				<foreach name="teams" item="v" key="k">
+					<option value={$v.teamId}>{$v.teamNameCn}</option>
+				</foreach>
+			</select>
+			&nbsp;&nbsp;
+			
+			<!-- 比赛时间选择 -->
+			<label>比赛时间:</label>
+			<select name="year[]">
+				<for start="2010" end="2020">
+					<option value={$i} <if condition="$i==2017">selected="selected"</if>>{$i}</option>
+				</for>
+			</select>
+			年
+			<select name="month[]">
+				<for start="1" end="13">
+					<option value={$i} <if condition="$i==9">selected="selected"</if>>{$i}</option>
+				</for>
+			</select>
+			月
+			<select name="day[]">
+				<for start="1" end="32">
+					<option value={$i} <if condition="$i==16">selected="selected"</if>>{$i}</option>
+				</for>
+			</select>
+			日
+			<select name="hour[]">
+				<for start="0" end="24">
+					<option value={$i} <if condition="$i==22">selected="selected"</if>>{$i|str_pad=###,2,0,STR_PAD_LEFT}</option>
+				</for>
+			</select>
+			：
+			<select name="minute[]">
+				<for start="0" end="60">
+					<option value={$i}>{$i|str_pad=###,2,0,STR_PAD_LEFT}</option>
+				</for>
+			</select>
+			<br />
+			<br />
+		</for>
+		
+		<br /><br />
+		
+		
+		<input type="submit" value="提交"/>
+	</form>
+	
+</body>
+</html>

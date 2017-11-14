@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="__ROOT__/library/jquery/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+	$(function(){
+		/* 解封按钮 */
+		$('[name=cancle]').click(function(){
+			if(confirm('确认解封？')){
+				location.href='__APP__/Userlist/remove/id/'+this.id;
+			}else{
+				return false;
+			}
+		})
+		/* 封号按钮 */
+		$('[name=ban]').click(function(){
+			if(confirm('确认封号三个月？')){
+				location.href='__APP__/Userlist/ban/id/'+this.id;
+			}else{
+				return false;
+			}
+		})
+		/* 清空按钮 */
+		$('[name=zero]').click(function(){
+			if(confirm('确认清空积分与等级？')){
+				location.href='__APP__/Userlist/zero/id/'+this.id;
+			}else{
+				return false;
+			}
+		})
+	})
+</script>
+<title>用户列表</title>
+</head>
+<body>
+	<h1 align="center">用户列表</h1>
+	<table border="1" cellspacing="0" align="center" width="1380px">
+		<tr>
+			<th>ID</th>
+			<th>用户名</th>
+			<th>主队</th>
+			<th>发表数</th>
+			<th>评论数</th>
+			<th>被赞数</th>
+			<th>积分</th>
+			<th>等级</th>
+			<th>是否封禁</th>
+			<th>解封时间</th>
+			<th>管理</th>
+		</tr>
+		<foreach name="users" key="k" item="v">
+			<tr>
+				<td align="center" width="50px">{$v.id}</td>
+				<td align="center" width="300px">{$v.username}</td>
+				<td align="center" width="150px">{$v.teamNameCn}</td>
+				<td align="center" width="100px">{$v.articlenum}</td>
+				<td align="center" width="100px">{$v.reviewnum}</td>
+				<td align="center" width="100px">{$v.praisednum}</td>
+				<td align="center" width="100px">{$v.userscore}</td>
+				<td align="center" width="100px">{$v.userlevel}</td>
+				<td align="center" width="100px"><if condition="$v[banned]==0">否<else/>已被封禁</if></td>
+				<td align="center" width="100px"><if condition="$v[bannedtime]==0">无<else/>{$v.bannedtime|substr=###,0,10}</if></td>
+				<td align="center" width="180px">
+					
+					<!-- 从session中获取管理员等级,等级不够则不予显示权限操作按钮 -->
+					<if condition="$_SESSION['mansMsg']['level'] lt 10">您没有权限
+					<else/>
+						<input type="button" value="封号" id="{$v.id}" name="ban"/>/ 
+						<input type="button" value="解封" id="{$v.id}" name="cancle"/>/
+						<input type="button" value="清零" id="{$v.id}"  name="zero"/>
+					</if>
+				</td>
+			</tr>
+		</foreach>
+		<tr>
+			<td></td>
+        	<td colspan="9" align="center">{$pageList}</td>
+			<td></td>
+      	</tr>
+	</table>
+</body>
+</html>

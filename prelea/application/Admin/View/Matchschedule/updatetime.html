@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>修改时间</title>
+</head>
+<body>
+	
+	<!-- 修改时间页面 -->
+	<div align="center" style="margin: 60px;">
+		<h3>修改比赛时间</h3>
+		<form action = "__APP__/Matchschedule/updatetime.html" method = "post">
+			<select name = "year">
+				<for start = "2015"  end = "2025">
+					<option value={$i} <if condition="$i==$data[0]">selected="selected"</if>>{$i}</option>
+				</for>
+			</select>年&nbsp;
+			<select name = "month">
+				<for start = "1"  end = "13">
+					<option value={$i} <if condition="$i==$data[1]">selected="selected"</if>>{$i}</option>
+				</for>
+			</select>月&nbsp;
+			<select name = "day">
+				<for start = "1"  end = "32">
+					<option value={$i} <if condition="$i==$data[2]">selected="selected"</if>>{$i}</option>
+				</for>
+			</select>日&nbsp;&nbsp;
+			<select name = "hour">
+				<for start = "0"  end = "24">
+					<option value={$i} <if condition="$i==$data[3]">selected="selected"</if>>{$i|str_pad=###,2,0,STR_PAD_LEFT}</option>
+				</for>
+			</select>:
+			<select name = "minute">
+				<for start = "0"  end = "60">
+					<option value={$i} <if condition="$i==$data[4]">selected="selected"</if>>{$i|str_pad=###,2,0,STR_PAD_LEFT}</option>
+				</for>
+			</select>
+			<input type="hidden" name="matchId" value="{$matchId}"/>
+			<input type="submit" value="确认修改"/>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="__ROOT__/public/css/reset.css" />
+<link rel="stylesheet" href="__ROOT__/public/css/common.css" />
+<link rel="stylesheet" href="__ROOT__/public/css/main.css" />
+<link rel="stylesheet" href="__ROOT__/public/css/index.css" />
+<script src="__ROOT__/library/jquery/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+	var index = 1;//图片id名
+	function changeImg()
+	{
+	//控制图片
+	$(".pic li").fadeOut(300);
+	$("#pic"+index).fadeIn(300);
+	//控制标题
+	$(".title li").fadeOut(300);
+	$("#title"+index).fadeIn(300);
+	//控制圆点
+	$(".btn li").removeClass("current");
+	$("#btn"+index).addClass("current");
+	 
+	index++;
+	index = index>5?0:index;
+	}; 
+	window.setInterval("changeImg()",3000);
+	$(function(){
+		$('[name=bbb]').click(function(){
+			index=this.innerText;
+			changeImg();
+		})
+	})
+</script>
+<title>英糙网-最纯粹的英超世界</title>
+</head>
+<body>
+	<!-- 引用网页头 -->
+	<include file="public:header"/>
+	<div class="area clear">
+		<!-- 轮播图 -->
+		<div class="side-left" id="focus-wrapper">
+			<ul class="pic">
+				<foreach name="pic6" item="v" key="k">
+					<li id="pic{$k}">
+						<a href="__APP__/News/index/articleid/{$v.articleid}">
+							<img style="width:660px;height:360px;" src="__ROOT__/public/images/news/{$v.articleid|str_pad=###,8,'0',STR_PAD_LEFT}/{$v.imagepath}" />
+						</a>
+					</li>
+				</foreach>
+			</ul>
+    		<div class="focus-mask"></div>
+			<ul class="title">
+				<foreach name="pic6" item="v" key="k">
+					<li id="title{$k}">
+						<a href="__APP__/News/index/articleid/{$v.articleid}">{$v.title}</a>
+					</li>					
+				</foreach>
+			</ul>
+			<ol class="btn">
+				<foreach name="pic6" item="v" key="k">
+					<li id="btn{$k}" name="bbb" <if condition="$k==0">class="current"</if>>{$k}</li>
+				</foreach>
+			</ol>
+		</div>
+		<!-- 最新赛果新闻 -->
+		<div class="side-right">
+			<foreach name="matchrst" item="v" key="k">
+				<h3>{$v.title}</h3>
+			</foreach>
+		</div>
+	</div>
+	<!-- 引用网页底 -->
+	<include file="public:footer"/>
+</body>
+</html>

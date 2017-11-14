@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="__ROOT__/public/css/reset.css"/>
+<link rel="stylesheet" type="text/css" href="__ROOT__/public/css/common.css"/>
+<script src="__ROOT__/library/jquery/jquery-3.1.1.js"></script>
+<script>
+	/* 根据用户所选轮次显示赛程 */
+	
+	/* 根据下拉框选中数字显示对应轮次赛程 */
+	function changeschedule(){
+		var rnval=$('#rn').val();
+		$('#t'+rnval).siblings().hide();
+		$('#t'+rnval).show();
+	}
+	
+	$(function(){
+		changeschedule();
+		
+		/* 下拉框值改变时,调用函数显示对应赛程 */
+		$('#rn').change(function(){
+			changeschedule();
+		}); 
+		
+		/* 点击对应按钮时,跳转至赛果录入页面 */
+		$('[name=entrst]').click(function(){
+			location.href="__APP__/Matchschedule/update/matchId/"+this.id;
+		});
+		
+		/* 点击对应按钮时,跳转至修改时间页面 */
+		$('[name=udttime]').click(function(){
+			location.href="__APP__/Matchschedule/updatetime/matchId/"+this.id;
+		})
+		
+		/* 点击对应按钮时,跳转至添加赛程页面 */
+		$('[name=insertmatch]').click(function(){
+			location.href="__APP__/Matchschedule/insertmatch";
+		})
+	})
+</script>
+<style>
+.bb {
+	border:1px solid #00f;
+}
+</style>
+<title>赛程表</title>
+</head>
+<body>
+	<if condition="$_SESSION['mansMsg']['level'] lt 10">
+	<else/>
+		<input type="button" name="insertmatch" value="添加赛程" />
+	</if>
+	<br>
+	<label>比赛轮次：</label>
+	<select name="roundnum" id="rn">
+		<for start="1" end="21">
+			<option value="{$i}">{$i}</option>
+		</for>
+	</select>
+	<div align="center">
+	<for start="1" end="21">
+		<table id="t{$i}" border="1">
+			<tr>
+				<th width="100px">主队</th>
+				<th width="100px">客队</th>
+				<th>比赛时间</th>
+				<th width="100px">比分</th>
+				<th>管理</th>
+			</tr>
+			<foreach name="matches" item="v" key="k">
+			
+				<if condition="$v[roundnum]==$i">
+				<tr>
+					<td align="center">{$v.aname}</td>
+					<td align="center">{$v.bname}</td>
+					<td align="center">{$v.matchtime|substr=###,0,16}</td>
+					<td align="center">{$v.hteamgoals}:{$v.vteamgoals}</td>
+					<td>
+						<if condition="$_SESSION['mansMsg']['level'] lt 10">您没有权限
+							<else/>
+							&nbsp;<input type="button" name="entrst" id="{$v[matchId]}" value="录入赛果" />
+							/&nbsp;<input type="button" name="udttime" id="{$v[matchId]}" value="修改时间" />&nbsp;
+						</if>
+					</td>
+				</tr>
+				</if>
+			</foreach> 
+		</table>
+	</for>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</body>
+</html>

@@ -1,0 +1,122 @@
+<script src="__ROOT__/library/jquery/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+  //退出登陆
+	function logout()
+	{
+		if(confirm("是否退出登陆？")){
+			$.ajax({
+				type:"post",
+				url:"__APP__/Login/logout",
+				success:function(){
+					window.location.reload();
+				}
+			});
+		}
+	}
+  function reload(obj)
+  {
+  	obj.src="__APP__/Verify/index";
+  }
+	
+	$(function(){
+		$('#login-form').hide();
+		$('#login').click(function(){
+			$('#login-form').slideDown();
+			$('<div></div>').appendTo($(document.body)).attr('id','mask');	
+		});
+		$('#close-button').click(function(){
+			$('#login-form').slideUp(400,function(){
+				$('#mask').remove();					
+			});
+		});
+		$('#register').click(function(){
+			window.location="__APP__/Register/index";
+		});
+		$('#sub').click(function(){
+			var username = $("#username").val();
+	  	var password = $("#password").val();
+	  	var verify = $('#verify').val();
+	  	
+		  //验证
+		  if(username == ""){
+			  alert("请输入用户名！");
+			  $("#username").focus();
+		  }
+		  else if(password == ""){
+			  alert("请输入密码！");
+			  $("#password").focus();
+		  }else if(verify == ""){
+	  		alert("请输入验证码！");
+			  $("#verify").focus();
+	  	}else{
+		  	$.ajax({
+		  		type:"post",
+		  		url:"__APP__/Login/index",
+		  		data:"username="+username+"&password="+password+"&verify="+verify,
+		  		success:function(re){
+		  			if(re == 0){
+						  alert("用户名或密码不正确！");
+					  }else if(re == -1){
+					  	alert("验证码错误！");
+					  }
+					  else{
+					  	window.location.reload();
+			  		}
+					}
+		  	});
+		  }
+			
+		})
+	})
+</script>
+
+<!-- 登录表单，点击登录后出现 -->
+<if condition="$_SESSION['userMsg']==null">
+<div id="login-form">
+	<div id="close-button-container"><span id="close-button">X</span></div>
+		<table>
+			<tr>
+				<td>用户名</td>
+				<td><input type="text"  id="username"></td>
+			</tr>
+			<tr>
+				<td>密码</td>
+				<td><input type="password"  id="password" /></td>
+			</tr>
+			<tr>
+				<td>验证码</td>
+				<td><input type="text" id="verify" /></td>
+				<td><img src="__APP__/Verify/index" onclick="reload(this)"/></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><input type="button" value="提交" id="sub"/></td>
+			</tr>
+		</table>
+</div>
+</if>
+<!-- 导航栏 -->
+<div class="topnavi">
+	<div class="top">
+		<div class="top-left">
+			<a href="#"><img src="__ROOT__/public/images/img/prelogo.jpg" style="float:left;height:40px;margin-right:10px"/></a>
+			<a href="#"><img src="__ROOT__/public/images/img/logo2.jpg" style="float:left;height:30px;margin:5px 10px"/></a>
+			<ul>
+				<li><a href="__APP__/Index/index">首页</a></li>
+				<li><a href="#">圈子</a></li>
+				<li><a href="#">数据</a></li>
+				<li><a href="#">专栏</a></li>
+			</ul>
+		</div>
+		<div class="top-right">
+			<if condition="$_SESSION['userMsg']!=null">
+				<span class="top-right-greet1">您好，</span><span class="top-right-greet2">{$_SESSION['userMsg']['username']}</span>
+				<a href="javascript:logout()" class="top-right-logout">退出登录</a>
+			<else/>
+				<a href="#" id="login" class="top-right-login">登录</a>
+				<a href="#" id="register" class="top-right-register">注册</a>
+			</if>
+		</div>
+	</div>
+</div>
+<br /><br />

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		
+<script src="__ROOT__/library/jquery/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('[name=a123]').change(function (){
+			var n=$('[name=a123]').val();
+			$('[name=qqq]').remove();
+			var ddd="<div name='qqq'>";
+			for(var i=0;i<n;i++){
+				var text="<input type='text' name='aaa[]' placeholder='啊啊啊' />";
+				ddd=ddd+text;
+			}
+			ddd=ddd+"</div>";
+			$('[name=a123]').after(ddd);
+		});
+	})
+</script>
+		<title></title>
+	</head>
+	<body>
+		<select name="a123">
+			<for start="1" end="11" name="j">
+				<option value="{$j}">{$j}</option>
+			</for>
+		</select>
+			<for start="1" end="2" name="j">
+				<div name="qqq">
+					<input type="text" name="aaa[]" placeholder="啊啊啊啊啊" />
+				</div>
+			</for>
+	</body>
+</html>

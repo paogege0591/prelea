@@ -1,0 +1,68 @@
+.side-left{
+	width: 660px;
+	position: relative;
+	height:360px;
+	overflow:hidden;
+}
+#focus-wrapper{
+	width:660px;
+	position:relative;
+	height:360px;
+	overflow:hidden;
+}
+.pic{
+	float:left;
+}
+
+.focus-mask{
+	position:absolute;
+	left:0;
+	bottom:0;
+	width:100%;
+	height:40px;
+	background:#000;
+	filter:alpha(opacity=30);
+	opacity:.3;
+	z-index:400;
+}
+
+.title{
+	position:absolute;
+	left:10px;
+	bottom:0;
+	z-index:600;
+	height:40px;
+	font:18px/40px 微软雅黑;
+	overflow:hidden;
+}
+.title li a{
+	color:#fff;	
+}
+
+
+.btn{
+	position:absolute;
+	bottom:12px;
+	right:10px;
+	z-index:500;
+}
+.btn li{
+	float:left;
+	margin-right:2px;
+	width:16px;
+	height:16px;
+	cursor:pointer;
+	background:url(../images/btn.png) no-repeat -20px -250px;
+	text-indent:-9999px;
+}
+.btn li.current{
+	background-position:0 -250px;
+}
+
+.side-right{
+	float:left;
+	display: inline;
+	position:relative;
+	width:340px;
+	height:360;
+}
